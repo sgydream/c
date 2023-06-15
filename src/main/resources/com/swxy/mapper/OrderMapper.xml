@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swxy.mapper.OrderMapper">
+    <resultMap type="com.swxy.pojo.Orders" id="BaseResultMap">
+        <id property="orderId" column="orderId" javaType="java.lang.String"/>
+        <result property="orderPosition" column="orderPosition" javaType="java.lang.String"/>
+        <result property="orderState" column="orderState" javaType="java.lang.Integer"/>
+        <result property="scheduleId" column="scheduleId" javaType="long"/>
+        <result property="userId" column="userId" javaType="long"/>
+        <result property="orderPrice" column="orderPrice" javaType="java.lang.Integer"/>
+        <result property="orderTime" column="orderTime" javaType="java.util.Date"/>
+    </resultMap>
+    <insert id="addOrder" parameterType="com.swxy.pojo.Orders">
+        insert into orders(orderId, orderPosition, scheduleId, userId, orderPrice, orderTime)
+        values (#{orderId}, #{orderPosition}, #{scheduleId}, #{userId}, #{orderPrice}, #{orderTime})
+    </insert>
+
+
+    <select id="findOrdersByScheduleId" parameterType="long" resultMap="BaseResultMap">
+        select *
+        from orders
+        where scheduleId = #{scheduleId}
+          and orderState != 2
+        order by orderTime desc
+    </select>
+
+
+</mapper>

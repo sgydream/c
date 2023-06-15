@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swxy.mapper.ScheduleMapper">
+    <resultMap type="com.swxy.pojo.Schedule" id="BaseResultMap">
+        <id property="scheduleId" column="scheduleId" javaType="long"/>
+        <result property="hallId" column="hallId" javaType="long"/>
+        <result property="movieId" column="movieId" javaType="long"/>
+        <result property="schedulePrice" column="schedulePrice" javaType="java.lang.Integer"/>
+        <result property="scheduleRemain" column="scheduleRemain" javaType="java.lang.Integer"/>
+        <result property="scheduleStartTime" column="scheduleStartTime" javaType="java.lang.String"/>
+        <result property="scheduleState" column="scheduleState" javaType="java.lang.Integer"/>
+    </resultMap>
+    <insert id="addScheduleRemain" parameterType="long">
+        update schedule
+        set scheduleRemain = scheduleRemain + 1
+        where scheduleId = #{scheduleId}
+    </insert>
+    <delete id="delScheduleRemain" parameterType="long">
+
+        update schedule
+        set scheduleRemain = scheduleRemain + 1
+        where scheduleId = #{scheduleId}
+
+    </delete>
+    <select id="findScheduleById" parameterType="long" resultMap="BaseResultMap">
+        select *
+        from schedule
+        where scheduleId = #{scheduleId}
+    </select>
+    <select id="findScheduleByCinemaAndMovieAndHall" resultMap="BaseResultMap">
+        select schedule.*
+        from schedule,
+             hall
+        where schedule.hallId = hall.hallId
+          and hall.cinemaId = #{cinemaId}
+          and movieId = #{movieId}
+          and schedule.hallId = #{hallId}
+          and scheduleState = 1
+    </select>
+    <select id="findScheduleByCinemaAndMovie" resultMap="BaseResultMap">
+        select schedule.*
+        from schedule,
+             hall
+        where schedule.hallId = hall.hallId
+          and hall.cinemaId = #{cinemaId}
+          and movieId = #{movieId}
+          and scheduleState = 1
+    </select>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swxy.mapper.HallMapper">
+	<resultMap type="com.swxy.pojo.Hall" id="BaseResultMap">
+		<id property="hallId" column="hallId" javaType="long"/>
+		<result property="hallName" column="hallName" javaType="java.lang.String"/>
+		<result property="cinemaId" column="cinemaId" javaType="long"/>
+	</resultMap>
+	
+	<select id="findHallById" parameterType="long" resultMap="BaseResultMap">
+		select * from hall where hallId = #{hallId}
+	</select>
+	<select id="findHallByCinemaId" parameterType="long" resultMap="BaseResultMap">
+		select * from hall where cinemaId = #{cinemaId}
+	</select>
+
+
+
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swxy.mapper.CinemaMapper">
+    <resultMap type="com.swxy.pojo.Cinema" id="BaseResultMap">
+        <id property="cinemaId" column="cinemaId" javaType="long"/>
+        <result property="cinemaName" column="cinemaName" javaType="java.lang.String"/>
+        <result property="cinemaAddress" column="cinemaAddress" javaType="java.lang.String"/>
+    </resultMap>
+
+    <select id="findCinemaById" parameterType="long" resultMap="BaseResultMap">
+        select *
+        from cinema
+        where cinemaId = #{cinemaId}
+    </select>
+    <select id="findCinemasByMovieId" parameterType="long" resultMap="BaseResultMap">
+        select distinct cinema.*
+        from hall,
+             schedule,
+             cinema
+        where hall.hallId = schedule.hallId
+          and hall.cinemaId = cinema.cinemaId
+          and schedule.movieId = #{movieId}
+    </select>
+
+</mapper>

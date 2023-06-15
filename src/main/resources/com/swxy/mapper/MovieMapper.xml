@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swxy.mapper.MovieMapper">
+    <resultMap type="com.swxy.pojo.Movies" id="BaseResultMap">
+        <id property="movieId" column="movieId" javaType="long"/>
+        <result property="movieActor" column="movieActor" javaType="java.lang.String"/>
+        <result property="movieBoxOffice" column="movieBoxOffice" javaType="float"/>
+        <result property="movieCnName" column="movieCnName" javaType="java.lang.String"/>
+        <result property="movieCommentCount" column="movieCommentCount" javaType="long"/>
+        <result property="movieCountry" column="movieCountry" javaType="java.lang.String"/>
+        <result property="movieDetail" column="movieDetail" javaType="java.lang.String"/>
+        <result property="movieDirector" column="movieDirector" javaType="java.lang.String"/>
+        <result property="movieHour" column="movieHour" javaType="java.lang.String"/>
+        <result property="movieEgName" column="movieEgName" javaType="java.lang.String"/>
+        <result property="moviePicture" column="moviePicture" javaType="java.lang.String"/>
+        <result property="movieScore" column="movieScore" javaType="float"/>
+        <result property="movieType" column="movieType" javaType="java.lang.String"/>
+        <result property="movieReleaseDate" column="movieReleaseDate" javaType="java.sql.Date"/>
+        <result property="movieState" column="movieState" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <insert id="addMovieCommentCount" parameterType="long">
+        update movies
+        set movieCommentCount = movieCommentCount - 1
+        where movieId = #{movieId}
+
+    </insert>
+    <update id="changeMovieBoxOff">
+        update movies
+        set movieBoxOffice = movieBoxOffice + #{movieBoxOffice}
+        where movieId = #{movieId}
+    </update>
+    <update id="deleteMovieCommentCount" parameterType="long">
+        update movies
+        set movieCommentCount = movieCommentCount - 1
+        where movieId = #{movieId}
+    </update>
+    <select id="sortMovieByBoxOffice" resultMap="BaseResultMap">
+
+        select *
+        from movies
+        where movieState = 1
+        order by movieBoxOffice desc
+
+    </select>
+
+    <select id="findMovieById" parameterType="long" resultMap="BaseResultMap">
+        select *
+        from movies
+        where movieId = #{movieId}
+    </select>
+    <select id="findAllMovies" resultType="com.swxy.pojo.Movies">
+        select *
+        from movies
+        where movieState = #{movieState}
+
+
+    </select>
+    <select id="findMoviesLikeType" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from movies
+        where movieType like '%${value}%'
+          and movieState = 1
+
+    </select>
+
+
+</mapper>
